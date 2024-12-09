@@ -1,0 +1,66 @@
+image: python:3.10
+
+variables:
+  PIP_CACHE_DIR: "$CI_PROJECT_DIR/.pip-cache"
+  PLATFORMIO_CACHE_DIR: "$CI_PROJECT_DIR/.platformio-cache"
+  PRE_COMMIT_HOME: "$CI_PROJECT_DIR/.pre-commit-cache"
+
+cache:
+  paths:
+    - .pip-cache/
+    - .platformio-cache/
+    - .pre-commit-cache/
+
+stages:
+ - check
+ - build
+ - release
+
+precommit-job:
+  stage: check
+  script:
+    - pip install pre-commit
+    - pre-commit run --all-files
+
+build-job:
+  stage: build
+  before_script:
+    - echo $CI_JOB_ID
+    - echo GE_JOB_ID=$CI_JOB_ID >> deploy.env
+    - pip install -U platformio
+  script:
+    - pio check --skip-packages --fail-on-defect high --fail-on-defect medium --fail-on-defect low
+    - pio run
+    - pio test --without-uploading --without-testing
+    - python ./scripts/check_warnings.py
+  artifacts:
+    paths:
+      - .pio/build/disco_f412zg/firmware.elf
+      - .pio/build/disco_f412zg/firmware.bin
+    reports:
+      # To ensure we've access to this file in the next stage
+      dotenv: deploy.env
+    expire_in: never
+
+release-job:
+  stage: release
+  image: registry.gitlab.com/gitlab-org/release-cli:latest
+  rules:
+    - if: $CI_COMMIT_TAG # Run this job when a tag is created
+  script:
+    - echo 'running release_job'
+    - echo 'Previous Job ID is printed below'
+    - echo $GE_JOB_ID
+  needs:
+    - job: build-job
+      artifacts: true
+  release:
+    name: 'Release Executables $CI_COMMIT_TAG'
+    description: '$CI_COMMIT_TAG'
+    tag_name: '$CI_COMMIT_TAG'
+    assets:
+      links:
+        - name: 'ELF Binary'
+          url: '${CI_PROJECT_URL}/-/jobs/${GE_JOB_ID}/artifacts/file/.pio/build/disco_f412zg/firmware.elf'
+        - name: 'BIN Binary'
+          url: '${CI_PROJECT_URL}/-/jobs/${GE_JOB_ID}/artifacts/file/.pio/build/disco_f412zg/firmware.bin'
