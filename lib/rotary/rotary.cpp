@@ -72,8 +72,8 @@ void Rotary::Poll() {
             OnRotate(-1);
         }
         previousState_ = currentState;
-        Update(HAL_GetTick(), HAL_GPIO_ReadPin(switchPort_, switchPin_));
     }
+    Update(HAL_GetTick(), HAL_GPIO_ReadPin(switchPort_, switchPin_));
 }
 
 // Shows the pattern to the LEDs
