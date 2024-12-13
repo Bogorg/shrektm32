@@ -94,6 +94,12 @@ void Rotary::LedFill(int from, int len) {
     // for example LedFill(3, 4) will show 0000000001111000
     // note that the LEDs are in a circle, so
     // LedFill(14, 5) is shown as "1100000000000111"
+
+    uint16_t pattern = 0;
+    for (int i = 0; i < len; ++i) {
+        pattern |= (1 << (from + i) % kNumberOfLeds);
+    }
+    LedPattern(pattern);    
 }
 
 // Shows a "position" pattern to the LEDs
