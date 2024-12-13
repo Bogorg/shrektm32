@@ -20,7 +20,7 @@
 #include "button.hpp"
 #include "seg7.hpp"
 
-CountButton::CountButton(int dir, Counter* c, Seg7* display, Rotary* rotary)
+CountButton::CountButton(int dir, Counter* c, Seg7* display, MyRotary* rotary)
     : Button(1000, 50),
       dir_{dir},
       counter_{c},
@@ -34,18 +34,18 @@ void CountButton::OnPress() {
         counter_->Decrement();
     }
     display_->Print(counter_->GetCount());
-    rotary_->LedPattern(counter_->GetCount());
+    rotary_->ShowPattern();
 }
 
 // cppcheck-suppress unusedFunction
 void CountButton::OnLongPress(int repetition) { OnPress(); }
 
-ResetButton::ResetButton(Counter* c, Seg7* display, Rotary* rotary)
+ResetButton::ResetButton(Counter* c, Seg7* display, MyRotary* rotary)
     : Button(), counter_{c}, display_{display}, rotary_{rotary} {}
 void ResetButton::OnLongPress(int repetition) {
     counter_->Reset();
     display_->Print(counter_->GetCount());
-    rotary_->LedPattern(counter_->GetCount());
+    rotary_->ShowPattern();
 }
 
 BrightnessButton::BrightnessButton(int dir, int* brightnessLevel, Seg7* display)

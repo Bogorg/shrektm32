@@ -40,7 +40,7 @@ constexpr int kBrightnessInitLevel = 4;
 
 class CountButton : public Button {
    public:
-    CountButton(int dir, Counter* c, Seg7* display, Rotary* rotary);
+    CountButton(int dir, Counter* c, Seg7* display, MyRotary* rotary);
     void OnPress() override;
     void OnLongPress(int repetition) override;
 
@@ -48,18 +48,18 @@ class CountButton : public Button {
     int dir_;
     Counter* counter_;
     Seg7* display_;
-    Rotary* rotary_;
+    MyRotary* rotary_;
 };
 
 class ResetButton : public Button {
    public:
-    ResetButton(Counter* c, Seg7* display, Rotary* rotary);
+    ResetButton(Counter* c, Seg7* display, MyRotary* rotary);
     void OnLongPress(int repetition) override;
 
    private:
     Counter* counter_;
     Seg7* display_;
-    Rotary* rotary_;
+    MyRotary* rotary_;
 };
 
 class BrightnessButton : public Button {
