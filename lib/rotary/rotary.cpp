@@ -1,17 +1,18 @@
 /**
  ******************************************************************************
  * @file        : rotary.cpp
- * @brief       : Rotary encoder library
- * @author      : Jacques Supcik <jacques.supcik@hefr.ch>
- * @date        : 24. August 2022
+ * @brief       : rotary button library
+ * @authors     : Bulliard Aurélien <aurelien.bulliard@edu.hefr.ch>
+ *               & Casimiro Filipe <filipe.casimiro@edu.hefr.ch>    
+ * @date        : 13.12.2024
  ******************************************************************************
- * @copyright   : Copyright (c) 2022 HEIA-FR / ISC
+ * @copyright   : Copyright (c) 2024 HEIA-FR / ISC
  *                Haute école d'ingénierie et d'architecture de Fribourg
  *                Informatique et Systèmes de Communication
  * @attention   : SPDX-License-Identifier: MIT OR Apache-2.0
  ******************************************************************************
  * @details
- * Rotary encoder library
+ * Rotary button library
  ******************************************************************************
  */
 
@@ -22,7 +23,9 @@ constexpr uint8_t k00 = 0;
 constexpr uint8_t k01 = 1;
 constexpr uint8_t k10 = 2;
 constexpr uint8_t k11 = 3;
-
+/**
+ * Constructor
+ */
 Rotary::Rotary(ArduinoShield::ClickId id) : Button(), Poller(), ShiftReg(id) {
     ArduinoShield* shield = ArduinoShield::GetInstance();
     switchPort_           = shield->GetGpioPort(id, ArduinoShield::kINT);
@@ -45,13 +48,17 @@ Rotary::Rotary(ArduinoShield::ClickId id) : Button(), Poller(), ShiftReg(id) {
     gpio_init_structure.Pin = encBPin_;
     HAL_GPIO_Init(encBPort_, &gpio_init_structure);
 }
-
+/**
+ * Destructor
+ */
 Rotary::~Rotary() {
     HAL_GPIO_DeInit(switchPort_, switchPin_);
     HAL_GPIO_DeInit(encAPort_, encAPin_);
     HAL_GPIO_DeInit(encBPort_, encBPin_);
 }
-
+/**
+ * Polls
+ */
 void Rotary::Poll() {
     // TODO(student): Implement the rotary poller (don't forget the push button)
 
@@ -76,7 +83,9 @@ void Rotary::Poll() {
     }
 }
 
-// Shows the pattern to the LEDs
+/**
+ * Shows the pattern to the LEDs
+ */
 void Rotary::LedPattern(uint16_t pattern) {
     uint8_t buffer[2];
     buffer[0] = pattern & 0xFF;
@@ -84,7 +93,9 @@ void Rotary::LedPattern(uint16_t pattern) {
     SendData(buffer, 2);
 }
 
-// Shows a "filled" pattern to the LEDs
+/**
+ * Shows a "filled" pattern to the LEDs
+ */
 void Rotary::LedFill(int from, int len) {
     // TODO(student): Implement LedFill
     // The pattern is must contain "len" 1s starting at position "from"
@@ -102,8 +113,10 @@ void Rotary::LedFill(int from, int len) {
     LedPattern(pattern);    
 }
 
-// Shows a "position" pattern to the LEDs
-// mirror is typically 1, 2 or 4
+/**
+ * Shows a "position" pattern to the LEDs
+ * mirror is typically 1, 2 or 4
+ */
 void Rotary::LedPos(int pos, int mirror) {
     uint16_t pattern = 0;
     if (mirror > 4) {

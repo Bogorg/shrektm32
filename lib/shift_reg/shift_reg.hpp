@@ -1,17 +1,18 @@
 /**
  ******************************************************************************
  * @file        : shift_reg.hpp
- * @brief       : Shift register library
- * @author      : Jacques Supcik <jacques.supcik@hefr.ch>
- * @date        : 24. August 2022
+ * @brief       : Shift register's headerfile
+ * @authors     : Bulliard Aurélien <aurelien.bulliard@edu.hefr.ch>
+ *               & Casimiro Filipe <filipe.casimiro@edu.hefr.ch>    
+ * @date        : 13.12.2024
  ******************************************************************************
- * @copyright   : Copyright (c) 2022 HEIA-FR / ISC
+ * @copyright   : Copyright (c) 2024 HEIA-FR / ISC
  *                Haute école d'ingénierie et d'architecture de Fribourg
  *                Informatique et Systèmes de Communication
  * @attention   : SPDX-License-Identifier: MIT OR Apache-2.0
  ******************************************************************************
  * @details
- * Shift register library
+ * Shift register's headerfile
  ******************************************************************************
  */
 

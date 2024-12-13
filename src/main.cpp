@@ -1,18 +1,18 @@
 /**
  ******************************************************************************
- * @file        : main.c
- * @brief       : Starter code for X-Mas Assignment in Computer Architecture
- * @author      : Jacques Supcik <jacques.supcik@hefr.ch>
- * @author      : Luca Haab <luca.haab@hefr.ch>
- * @date        : 15. December 2022
+ * @file        : main.cpp
+ * @brief       : main file
+ * @authors     : Bulliard Aurélien <aurelien.bulliard@edu.hefr.ch>
+ *               & Casimiro Filipe <filipe.casimiro@edu.hefr.ch>    
+ * @date        : 13.12.2024
  ******************************************************************************
- * @copyright   : Copyright (c) 2022 HEIA-FR / ISC
+ * @copyright   : Copyright (c) 2024 HEIA-FR / ISC
  *                Haute école d'ingénierie et d'architecture de Fribourg
  *                Informatique et Systèmes de Communication
  * @attention   : SPDX-License-Identifier: MIT OR Apache-2.0
  ******************************************************************************
  * @details
- * Starter code for X-Mas Assignment in Computer Architecture
+ * Main file
  ******************************************************************************
  */
 
@@ -84,7 +84,6 @@ int main(void) {
     DiscoLcdGFX gfx(new PwmProxy());
     gfx.SetBackLightLevel(0.5);
 
-    // TODID(student): Instanciate Rotary Encoder
     MyRotary rotary(ArduinoShield::kClick2, &counter, &display);
 
     Joystick* joystick = Joystick::GetInstance();
