@@ -40,10 +40,6 @@ class Seg7 : ShiftReg{
     ArduinoShield::ClickId id_;
     PwmChannel pwm_;
     ShiftReg shiftReg_;
-    void SendData(uint8_t* buffer, int len);
-    void Latch();
-
-
 };
 
 #endif /* LIB_SEG7_SEG7_HPP_ */
