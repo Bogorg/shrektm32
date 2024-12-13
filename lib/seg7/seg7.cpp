@@ -1,17 +1,18 @@
 /**
  ******************************************************************************
- * @file        : seg7.hpp
- * @brief       : Seven Segment library
- * @author      : Jacques Supcik <jacques.supcik@hefr.ch>
- * @date        : 24. August 2022
+ * @file        : seg7.cpp
+ * @brief       : Seven segments display's library
+ * @authors     : Bulliard Aurélien <aurelien.bulliard@edu.hefr.ch>
+ *               & Casimiro Filipe <filipe.casimiro@edu.hefr.ch>    
+ * @date        : 13.12.2024
  ******************************************************************************
- * @copyright   : Copyright (c) 2022 HEIA-FR / ISC
+ * @copyright   : Copyright (c) 2024 HEIA-FR / ISC
  *                Haute école d'ingénierie et d'architecture de Fribourg
  *                Informatique et Systèmes de Communication
  * @attention   : SPDX-License-Identifier: MIT OR Apache-2.0
  ******************************************************************************
  * @details
- * Seven Segment library
+ * Seven segments display's library
  ******************************************************************************
  */
 
@@ -42,14 +43,18 @@ const uint8_t kDigits[]     = {
         0b11100100,  // F
 };
 
-SPI_HandleTypeDef Seg7::hspi_{};
-
+/**
+ * Constructor
+ * Calls super constructor and defines Pwm channel depending of which click module is choosed
+ */
 Seg7::Seg7(ArduinoShield::ClickId id)
     : ShiftReg(id), pwm_{id == ArduinoShield::kClick1 ? PwmChannel::kPF3
                                         : PwmChannel::kPF10} {
     pwm_.Start();
 }
-
+/**
+ * Destructor
+ */
 Seg7::~Seg7() {
     pwm_.SetDutyCycle(0);
     pwm_.Stop();
