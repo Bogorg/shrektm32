@@ -1,17 +1,18 @@
 /**
  ******************************************************************************
  * @file        : seg7.hpp
- * @brief       : Seven Segment library
- * @author      : Jacques Supcik <jacques.supcik@hefr.ch>
- * @date        : 24. August 2022
+ * @brief       : Seven segments display's library's headerfile
+ * @authors     : Bulliard Aurélien <aurelien.bulliard@edu.hefr.ch>
+ *               & Casimiro Filipe <filipe.casimiro@edu.hefr.ch>    
+ * @date        : 13.12.2024
  ******************************************************************************
- * @copyright   : Copyright (c) 2022 HEIA-FR / ISC
+ * @copyright   : Copyright (c) 2024 HEIA-FR / ISC
  *                Haute école d'ingénierie et d'architecture de Fribourg
  *                Informatique et Systèmes de Communication
  * @attention   : SPDX-License-Identifier: MIT OR Apache-2.0
  ******************************************************************************
  * @details
- * Seven Segment library
+ * Seven segments display's library's headerfile
  ******************************************************************************
  */
 
@@ -28,7 +29,6 @@ class Seg7 : ShiftReg{
    public:
     explicit Seg7(ArduinoShield::ClickId id = ArduinoShield::kClick1);
     ~Seg7();
-    void Reset();
 
     void PrintPattern(uint16_t pattern);
     void Print(int i);
@@ -39,16 +39,11 @@ class Seg7 : ShiftReg{
    private:
     ArduinoShield::ClickId id_;
     PwmChannel pwm_;
-    uint32_t resetPin_;
-    GPIO_TypeDef* resetPort_;
-    uint32_t latchPin_;
-    GPIO_TypeDef* latchPort_;
 
     void SendData(uint8_t* buffer, int len);
     void Latch();
 
-    static SPI_HandleTypeDef hspi_;
-    static void InitSpi();
+
 };
 
 #endif /* LIB_SEG7_SEG7_HPP_ */

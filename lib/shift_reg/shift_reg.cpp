@@ -2,10 +2,11 @@
  ******************************************************************************
  * @file        : shift_reg.cpp
  * @brief       : Shift register library
- * @author      : Jacques Supcik <jacques.supcik@hefr.ch>
- * @date        : 24. August 2022
+ * @authors     : Bulliard Aurélien <aurelien.bulliard@edu.hefr.ch>
+ *               & Casimiro Filipe <filipe.casimiro@edu.hefr.ch>    
+ * @date        : 13.12.2024
  ******************************************************************************
- * @copyright   : Copyright (c) 2022 HEIA-FR / ISC
+ * @copyright   : Copyright (c) 2024 HEIA-FR / ISC
  *                Haute école d'ingénierie et d'architecture de Fribourg
  *                Informatique et Systèmes de Communication
  * @attention   : SPDX-License-Identifier: MIT OR Apache-2.0
@@ -19,8 +20,10 @@
 
 #include "arduino_shield.hpp"
 
-SPI_HandleTypeDef ShiftReg::hspi_{};
-
+SPI_HandleTypeDef ShiftReg::hspi_{}; //Instanciation of SPI
+/**
+ * Constructor
+ */
 ShiftReg::ShiftReg(ArduinoShield::ClickId id) : id_{id} {
 
     ArduinoShield* shield = ArduinoShield::GetInstance();
@@ -44,26 +47,39 @@ ShiftReg::ShiftReg(ArduinoShield::ClickId id) : id_{id} {
     InitSpi();
 }
 
+/**
+ * Destructor
+ */
 ShiftReg::~ShiftReg() {
     HAL_GPIO_DeInit(resetPort_, resetPin_);
     HAL_GPIO_DeInit(latchPort_, latchPin_);
 }
 
+/**
+ * Resets this register
+ */
 void ShiftReg::Reset() {
     HAL_GPIO_WritePin(resetPort_, resetPin_, GPIO_PIN_RESET);
     HAL_GPIO_WritePin(resetPort_, resetPin_, GPIO_PIN_SET);
 }
 
+/**
+ * Latches this register
+ */
 void ShiftReg::Latch() {
     HAL_GPIO_WritePin(latchPort_, latchPin_, GPIO_PIN_SET);
     HAL_GPIO_WritePin(latchPort_, latchPin_, GPIO_PIN_RESET);
 }
-
+/**
+ * Sends data in buffer to SPI
+ */
 void ShiftReg::SendData(uint8_t* buffer, int len) {
     HAL_SPI_Transmit(&hspi_, &buffer[0], 2, 1000);
     Latch();
 }
-
+/**
+ * Inits the SPI
+ */
 void ShiftReg::InitSpi() {
     static bool initialized = false;
     if (initialized) {
