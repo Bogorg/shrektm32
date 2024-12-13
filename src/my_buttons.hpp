@@ -58,7 +58,7 @@ class ResetButton : public Button {
 
    private:
     Counter* counter_;
-    Seg7* display_; 
+    Seg7* display_;
     Rotary* rotary_;
 };
 

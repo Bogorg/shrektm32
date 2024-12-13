@@ -3,7 +3,7 @@
  * @file        : shift_reg.cpp
  * @brief       : Shift register library
  * @authors     : Bulliard Aurélien <aurelien.bulliard@edu.hefr.ch>
- *               & Casimiro Filipe <filipe.casimiro@edu.hefr.ch>    
+ *               & Casimiro Filipe <filipe.casimiro@edu.hefr.ch>
  * @date        : 13.12.2024
  ******************************************************************************
  * @copyright   : Copyright (c) 2024 HEIA-FR / ISC
@@ -20,12 +20,11 @@
 
 #include "arduino_shield.hpp"
 
-SPI_HandleTypeDef ShiftReg::hspi_{}; //Instanciation of SPI
+SPI_HandleTypeDef ShiftReg::hspi_{};  // Instanciation of SPI
 /**
  * Constructor
  */
 ShiftReg::ShiftReg(ArduinoShield::ClickId id) : id_{id} {
-
     ArduinoShield* shield = ArduinoShield::GetInstance();
     resetPin_             = shield->GetGpioPin(id, ArduinoShield::kRST);
     resetPort_            = shield->GetGpioPort(id, ArduinoShield::kRST);

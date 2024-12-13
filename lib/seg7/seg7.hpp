@@ -3,7 +3,7 @@
  * @file        : seg7.hpp
  * @brief       : Seven segments display's library's headerfile
  * @authors     : Bulliard Aurélien <aurelien.bulliard@edu.hefr.ch>
- *               & Casimiro Filipe <filipe.casimiro@edu.hefr.ch>    
+ *               & Casimiro Filipe <filipe.casimiro@edu.hefr.ch>
  * @date        : 13.12.2024
  ******************************************************************************
  * @copyright   : Copyright (c) 2024 HEIA-FR / ISC
@@ -20,12 +20,12 @@
 #define LIB_SEG7_SEG7_HPP_
 
 #include <stdint.h>
-#include "shift_reg.hpp"
 
 #include "arduino_shield.hpp"
 #include "pwm.hpp"
+#include "shift_reg.hpp"
 
-class Seg7 : ShiftReg{
+class Seg7 : ShiftReg {
    public:
     explicit Seg7(ArduinoShield::ClickId id = ArduinoShield::kClick1);
     ~Seg7();

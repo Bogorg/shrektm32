@@ -3,7 +3,7 @@
  * @file        : seg7.cpp
  * @brief       : Seven segments display's library
  * @authors     : Bulliard Aurélien <aurelien.bulliard@edu.hefr.ch>
- *               & Casimiro Filipe <filipe.casimiro@edu.hefr.ch>    
+ *               & Casimiro Filipe <filipe.casimiro@edu.hefr.ch>
  * @date        : 13.12.2024
  ******************************************************************************
  * @copyright   : Copyright (c) 2024 HEIA-FR / ISC
@@ -45,12 +45,12 @@ const uint8_t kDigits[]     = {
 
 /**
  * Constructor
- * Calls super constructor and defines Pwm channel depending of which click module is choosed
+ * Calls super constructor and defines Pwm channel depending of which click
+ * module is choosed
  */
 Seg7::Seg7(ArduinoShield::ClickId id)
-    : pwm_{id == ArduinoShield::kClick1 ? PwmChannel::kPF3
-                                        : PwmChannel::kPF10},
-    shiftReg_{id} {
+    : pwm_{id == ArduinoShield::kClick1 ? PwmChannel::kPF3 : PwmChannel::kPF10},
+      shiftReg_{id} {
     pwm_.Start();
 }
 /**

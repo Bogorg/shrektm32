@@ -10,9 +10,9 @@ CONFIGURATION: https://docs.platformio.org/page/boards/ststm32/disco_f412zg.html
 PLATFORM: ST STM32 (15.4.1) > 32F412GDISCOVERY
 HARDWARE: STM32F412ZGT6 100MHz, 256KB RAM, 1MB Flash
 DEBUG: Current (stlink) On-board (stlink) External (blackmagic, cmsis-dap, jlink)
-PACKAGES: 
- - framework-stm32cubef4 @ 1.26.2 
- - tool-ldscripts-ststm32 @ 0.2.0 
+PACKAGES:
+ - framework-stm32cubef4 @ 1.26.2
+ - tool-ldscripts-ststm32 @ 0.2.0
  - toolchain-gccarmnoneeabi @ 1.90301.200702 (9.3.1)
 LDF: Library Dependency Finder -> https://bit.ly/configure-pio-ldf
 LDF Modes: Finder ~ chain, Compatibility ~ soft

@@ -21,7 +21,11 @@
 #include "seg7.hpp"
 
 CountButton::CountButton(int dir, Counter* c, Seg7* display, Rotary* rotary)
-    : Button(1000, 50), dir_{dir}, counter_{c}, display_{display}, rotary_{rotary} {}
+    : Button(1000, 50),
+      dir_{dir},
+      counter_{c},
+      display_{display},
+      rotary_{rotary} {}
 
 void CountButton::OnPress() {
     if (dir_ == 1) {
