@@ -48,8 +48,9 @@ const uint8_t kDigits[]     = {
  * Calls super constructor and defines Pwm channel depending of which click module is choosed
  */
 Seg7::Seg7(ArduinoShield::ClickId id)
-    : ShiftReg(id), pwm_{id == ArduinoShield::kClick1 ? PwmChannel::kPF3
-                                        : PwmChannel::kPF10} {
+    : pwm_{id == ArduinoShield::kClick1 ? PwmChannel::kPF3
+                                        : PwmChannel::kPF10},
+    shiftReg_{id} {
     pwm_.Start();
 }
 /**
@@ -64,7 +65,7 @@ void Seg7::PrintPattern(uint16_t pattern) {
     uint8_t buffer[2];
     buffer[0] = pattern & 0xFF;
     buffer[1] = pattern >> 8;
-    SendData(buffer, 2);
+    shiftReg_.SendData(buffer, 2);
 }
 
 void Seg7::Print(int i) {
