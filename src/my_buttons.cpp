@@ -20,10 +20,10 @@
 #include "button.hpp"
 #include "seg7.hpp"
 
-// TODO(student): Add an argument for the rotary encoder and use it to change
+// TODID(student): Add an argument for the rotary encoder and use it to change
 // the pattern of the rotary encoder.
-CountButton::CountButton(int dir, Counter* c, Seg7* display)
-    : Button(1000, 50), dir_{dir}, counter_{c}, display_{display} {}
+CountButton::CountButton(int dir, Counter* c, Seg7* display, Rotary* rotary)
+    : Button(1000, 50), dir_{dir}, counter_{c}, display_{display}, rotary_{rotary} {}
 
 void CountButton::OnPress() {
     if (dir_ == 1) {
@@ -32,18 +32,20 @@ void CountButton::OnPress() {
         counter_->Decrement();
     }
     display_->Print(counter_->GetCount());
+    rotary_->LedPattern(counter_->GetCount());
 }
 
 // cppcheck-suppress unusedFunction
 void CountButton::OnLongPress(int repetition) { OnPress(); }
 
-// TODO(student): Add an argument for the rotary encoder and use it to change
+// TODID(student): Add an argument for the rotary encoder and use it to change
 // the pattern of the rotary encoder.
-ResetButton::ResetButton(Counter* c, Seg7* display)
-    : Button(), counter_{c}, display_{display} {}
+ResetButton::ResetButton(Counter* c, Seg7* display, Rotary* rotary)
+    : Button(), counter_{c}, display_{display}, rotary_{rotary} {}
 void ResetButton::OnLongPress(int repetition) {
     counter_->Reset();
     display_->Print(counter_->GetCount());
+    rotary_->LedPattern(counter_->GetCount());
 }
 
 BrightnessButton::BrightnessButton(int dir, int* brightnessLevel, Seg7* display)
