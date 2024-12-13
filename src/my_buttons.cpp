@@ -20,8 +20,6 @@
 #include "button.hpp"
 #include "seg7.hpp"
 
-// TODID(student): Add an argument for the rotary encoder and use it to change
-// the pattern of the rotary encoder.
 CountButton::CountButton(int dir, Counter* c, Seg7* display, Rotary* rotary)
     : Button(1000, 50), dir_{dir}, counter_{c}, display_{display}, rotary_{rotary} {}
 
@@ -38,8 +36,6 @@ void CountButton::OnPress() {
 // cppcheck-suppress unusedFunction
 void CountButton::OnLongPress(int repetition) { OnPress(); }
 
-// TODID(student): Add an argument for the rotary encoder and use it to change
-// the pattern of the rotary encoder.
 ResetButton::ResetButton(Counter* c, Seg7* display, Rotary* rotary)
     : Button(), counter_{c}, display_{display}, rotary_{rotary} {}
 void ResetButton::OnLongPress(int repetition) {

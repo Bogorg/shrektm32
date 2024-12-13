@@ -84,13 +84,10 @@ int main(void) {
     DiscoLcdGFX gfx(new PwmProxy());
     gfx.SetBackLightLevel(0.5);
 
-    // TODID(student): Instanciate Rotary Encoder
     MyRotary rotary(ArduinoShield::kClick2, &counter, &display);
 
     Joystick* joystick = Joystick::GetInstance();
-    // TODID(student): pass a reference of the rotary encoder to the CountButtons
-    // and ResetButton. This is required to update the LEDs pattern on the
-    // rotary encoder when the counter changes.
+
     joystick->AddButton(Joystick::kButtonRight,
                         new CountButton(1, &counter, &display, &rotary));
     joystick->AddButton(Joystick::kButtonLeft,

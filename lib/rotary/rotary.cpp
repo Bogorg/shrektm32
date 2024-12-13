@@ -53,9 +53,6 @@ Rotary::~Rotary() {
 }
 
 void Rotary::Poll() {
-    // TODO(student): Implement the rotary poller (don't forget the push button)
-
-    
     GPIO_PinState aState = HAL_GPIO_ReadPin(encAPort_, encAPin_);
     GPIO_PinState bState = HAL_GPIO_ReadPin(encBPort_, encBPin_);
 
@@ -86,15 +83,6 @@ void Rotary::LedPattern(uint16_t pattern) {
 
 // Shows a "filled" pattern to the LEDs
 void Rotary::LedFill(int from, int len) {
-    // TODO(student): Implement LedFill
-    // The pattern is must contain "len" 1s starting at position "from"
-    //
-    //                                       from -----.
-    //                                                 v
-    // for example LedFill(3, 4) will show 0000000001111000
-    // note that the LEDs are in a circle, so
-    // LedFill(14, 5) is shown as "1100000000000111"
-
     uint16_t pattern = 0;
     for (int i = 0; i < len; ++i) {
         pattern |= (1 << (from + i) % kNumberOfLeds);
