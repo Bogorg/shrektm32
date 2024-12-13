@@ -19,11 +19,12 @@
 #define LIB_SEG7_SEG7_HPP_
 
 #include <stdint.h>
+#include "shift_reg.hpp"
 
 #include "arduino_shield.hpp"
 #include "pwm.hpp"
 
-class Seg7 {
+class Seg7 : ShiftReg{
    public:
     explicit Seg7(ArduinoShield::ClickId id = ArduinoShield::kClick1);
     ~Seg7();

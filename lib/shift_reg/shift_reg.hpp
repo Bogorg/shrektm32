@@ -34,7 +34,10 @@ class ShiftReg {
 
    private:
     ArduinoShield::ClickId id_;
-    // TODO(student): Add required additional private attributes
+    uint32_t resetPin_;
+    GPIO_TypeDef* resetPort_;
+    uint32_t latchPin_;
+    GPIO_TypeDef* latchPort_;
 
     static SPI_HandleTypeDef hspi_;
     static void InitSpi();
