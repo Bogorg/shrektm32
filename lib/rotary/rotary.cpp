@@ -18,6 +18,10 @@
 #include "rotary.hpp"
 
 static constexpr int kNumberOfLeds = 16;
+constexpr uint8_t k00 = 0;
+constexpr uint8_t k01 = 1;
+constexpr uint8_t k10 = 2;
+constexpr uint8_t k11 = 3;
 
 Rotary::Rotary(ArduinoShield::ClickId id) : Button(), Poller(), ShiftReg(id) {
     ArduinoShield* shield = ArduinoShield::GetInstance();
@@ -50,6 +54,26 @@ Rotary::~Rotary() {
 
 void Rotary::Poll() {
     // TODO(student): Implement the rotary poller (don't forget the push button)
+
+    
+    GPIO_PinState aState = HAL_GPIO_ReadPin(encAPort_, encAPin_);
+    GPIO_PinState bState = HAL_GPIO_ReadPin(encBPort_, encBPin_);
+
+    int currentState = (aState << 1) | bState;
+    
+    if (currentState != previousState_) {
+        if (currentState == k00 && previousState_ == k01) {
+            OnRotate(1);
+        } else if (currentState == k00 && previousState_ == k10) {
+            OnRotate(-1);
+        } else if (currentState == k11 && previousState_ == k10) {
+            OnRotate(1);
+        } else if (currentState == k11 && previousState_ == k01) {
+            OnRotate(-1);
+        }
+        previousState_ = currentState;
+        Update(HAL_GetTick(), HAL_GPIO_ReadPin(switchPort_, switchPin_));
+    }
 }
 
 // Shows the pattern to the LEDs
