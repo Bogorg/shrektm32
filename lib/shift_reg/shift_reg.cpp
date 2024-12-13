@@ -19,31 +19,67 @@
 
 #include "arduino_shield.hpp"
 
-// TODO(student): define ShiftReg::hspi_;
+SPI_HandleTypeDef ShiftReg::hspi_{};
 
 ShiftReg::ShiftReg(ArduinoShield::ClickId id) : id_{id} {
-    // TODO(student): Implement Constructor (see Seg7::Seg7() in
-    // lib/seg7/seg7.cpp)
+
+    ArduinoShield* shield = ArduinoShield::GetInstance();
+    resetPin_             = shield->GetGpioPin(id, ArduinoShield::kRST);
+    resetPort_            = shield->GetGpioPort(id, ArduinoShield::kRST);
+    latchPin_             = shield->GetGpioPin(id, ArduinoShield::kCS);
+    latchPort_            = shield->GetGpioPort(id, ArduinoShield::kCS);
+
+    GPIO_InitTypeDef gpio_init_structure;
+    gpio_init_structure.Mode  = GPIO_MODE_OUTPUT_PP;
+    gpio_init_structure.Pull  = GPIO_PULLUP;
+    gpio_init_structure.Speed = GPIO_SPEED_FREQ_HIGH;
+
+    gpio_init_structure.Pin = resetPin_;
+    HAL_GPIO_Init(resetPort_, &gpio_init_structure);
+    gpio_init_structure.Pin = latchPin_;
+    HAL_GPIO_Init(latchPort_, &gpio_init_structure);
+
+    HAL_GPIO_WritePin(latchPort_, latchPin_, GPIO_PIN_RESET);
+    HAL_GPIO_WritePin(resetPort_, resetPin_, GPIO_PIN_SET);
+    InitSpi();
 }
 
 ShiftReg::~ShiftReg() {
-    // TODO(student): Implement Destructor (see Seg7::~Seg7() in
-    // lib/seg7/seg7.cpp)
+    HAL_GPIO_DeInit(resetPort_, resetPin_);
+    HAL_GPIO_DeInit(latchPort_, latchPin_);
 }
 
 void ShiftReg::Reset() {
-    // TODO(student): Implement Reset
+    HAL_GPIO_WritePin(resetPort_, resetPin_, GPIO_PIN_RESET);
+    HAL_GPIO_WritePin(resetPort_, resetPin_, GPIO_PIN_SET);
 }
 
 void ShiftReg::Latch() {
-    // TODO(student): Implement Latch
+    HAL_GPIO_WritePin(latchPort_, latchPin_, GPIO_PIN_SET);
+    HAL_GPIO_WritePin(latchPort_, latchPin_, GPIO_PIN_RESET);
 }
 
 void ShiftReg::SendData(uint8_t* buffer, int len) {
-    // TODO(student): Implement SendData
+    HAL_SPI_Transmit(&hspi_, &buffer[0], 2, 1000);
+    Latch();
 }
 
 void ShiftReg::InitSpi() {
-    // TODO(student): Implement InitSpi (see Seg7::InitSpi() in
-    // lib/seg7/seg7.cpp)
+    static bool initialized = false;
+    if (initialized) {
+        return;
+    }
+    ArduinoShield* shield        = ArduinoShield::GetInstance();
+    hspi_.Instance               = shield->GetSpi();
+    hspi_.Init.Mode              = SPI_MODE_MASTER;
+    hspi_.Init.Direction         = SPI_DIRECTION_2LINES;
+    hspi_.Init.DataSize          = SPI_DATASIZE_8BIT;
+    hspi_.Init.CLKPolarity       = SPI_POLARITY_LOW;
+    hspi_.Init.CLKPhase          = SPI_PHASE_1EDGE;
+    hspi_.Init.NSS               = SPI_NSS_SOFT;
+    hspi_.Init.BaudRatePrescaler = SPI_BAUDRATEPRESCALER_32;  // 3.125 MHz
+    hspi_.Init.FirstBit          = SPI_FIRSTBIT_MSB;
+    shield->MspInitSpi();
+    HAL_SPI_Init(&hspi_);
+    initialized = true;
 }
