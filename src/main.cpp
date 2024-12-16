@@ -3,7 +3,7 @@
  * @file        : main.cpp
  * @brief       : main file
  * @authors     : Bulliard Aurélien <aurelien.bulliard@edu.hefr.ch>
- *               & Casimiro Filipe <filipe.casimiro@edu.hefr.ch>    
+ *               & Casimiro Filipe <filipe.casimiro@edu.hefr.ch>
  * @date        : 13.12.2024
  ******************************************************************************
  * @copyright   : Copyright (c) 2024 HEIA-FR / ISC
@@ -23,14 +23,15 @@
 #include "color.hpp"
 #include "deletable_text.hpp"
 #include "f412disco_ado.h"
+#include "frames.hpp"
 #include "joystick.hpp"
 #include "my_buttons.hpp"
 #include "my_counter.hpp"
 #include "my_rotary.hpp"
 #include "progress.hpp"
+#include "shrek.cpp"
 #include "tracing.h"
 #include "xmas.hpp"
-#include "shrek.cpp"
 
 constexpr int kTextPosY          = 215;
 constexpr int kStartProgressBar  = 8;
@@ -39,7 +40,6 @@ constexpr int kProgressBarHeight = 8;
 constexpr int kMaximalNumber     = 99;
 constexpr int kPollerPrescaler   = 10000;
 constexpr int kPollerFrequency   = 1000;
-
 
 class PwmProxy : public DiscoLcdGFX::Pwm {
    public:
@@ -64,8 +64,15 @@ int main(void) {
     DiscoAdoInit();
 
     Seg7 display(ArduinoShield::kClick1);
-
     DiscoLcdGFX gfx(new PwmProxy());
     gfx.SetBackLightLevel(0.5);
-    gfx.drawBitmap(0,0,shrek,240,240,0xFFFF);
+    while (1) {
+        for (int i = 0; i < 50; i++) {
+            const uint8_t* current_frame = epd_bitmap_allArray[i];
+            gfx.drawBitmap(0, 0, current_frame, 120, 68, 0xFFFF);
+            HAL_Delay(1000);
+            gfx.fillScreen(0x0000);
+        }
+    }
+    // gfx.drawBitmap(0,0,shrek,240,240,0xFFFF);
 }
