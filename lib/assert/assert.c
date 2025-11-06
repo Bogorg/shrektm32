@@ -2,7 +2,7 @@
  ******************************************************************************
  * @file        : assert.c
  * @brief       : Assertions
- * @author      : Jacques Supcik <jacques.supcik@hefr.ch>
+ * @author      : Aurélien Bulliard <aurelien.bulliard@hefr.ch>
  * @date        : 27. July 2022
  ******************************************************************************
  * @copyright   : Copyright (c) 2022 HEIA-FR / ISC

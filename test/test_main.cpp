@@ -2,7 +2,7 @@
  ******************************************************************************
  * @file        : test_main.cpp
  * @brief       : Tests runner
- * @author      : Jacques Supcik <jacques.supcik@hefr.ch>
+ * @author      : Aurélien Bulliard <aurelien.bulliard@hefr.ch>
  * @date        : 11. August 2022
  ******************************************************************************
  * @copyright   : Copyright (c) 2022 HEIA-FR / ISC

@@ -2,7 +2,7 @@
  ******************************************************************************
  * @file        : app_conf.h
  * @brief       : App Configuration
- * @author      : Jacques Supcik <jacques.supcik@hefr.ch>
+ * @author      : Aurélien Bulliard <aurelien.bulliard@hefr.ch>
  * @date        : 10. August 2022
  ******************************************************************************
  * @copyright   : Copyright (c) 2022 HEIA-FR / ISC

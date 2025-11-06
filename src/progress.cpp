@@ -2,7 +2,7 @@
  ******************************************************************************
  * @file        : progress.cpp
  * @brief       : Progress bar
- * @author      : Jacques Supcik <jacques.supcik@hefr.ch>
+ * @author      : Aurélien Bulliard <aurelien.bulliard@hefr.ch>
  * @author      : Luca Haab <luca.haab@hefr.ch>
  * @date        : 10. December 2022
  ******************************************************************************
